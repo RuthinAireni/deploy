@@ -7,7 +7,7 @@ phases:
       - sudo yum update -y
       - sudo yum install -y httpd git
       - echo Installing git-secrets...
-      - git clone https://github.com/awslabs/git-secrets.git
+      - git clone https://github.com/RuthinAireni/deploy.git
       - cd git-secrets && sudo make install && cd ..
       - git secrets --install
       - git secrets --register-aws
