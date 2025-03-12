@@ -1,20 +1,18 @@
 version: 0.2
-os
 phases:
   install:
     commands:
-      - echo Installing dependencies...
+      - echo Installing NGINX...
       - sudo yum update -y
-      - sudo yum install -y httpd git
+      - sudo yum install httpd -y
   build:
     commands:
       - echo Build started on `date`
+      - pwd && ls -la
       - sudo cp index.html /var/www/html/       # Copy index.html to the correct location
   post_build:
     commands:
-      - echo Configuring and starting HTTPD...
-      - sudo systemctl start httpd
-      - sudo systemctl enable httpd
+      - echo Configuring and starting NGINX...
 artifacts:
   files:
-    - '**/*'
+    - '**/
