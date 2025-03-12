@@ -15,4 +15,4 @@ phases:
       - echo Configuring and starting NGINX...
 artifacts:
   files:
-    - '**/
+    - '**/*'
