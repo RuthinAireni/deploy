@@ -1,22 +1,14 @@
 version: 0.2
-
+os
 phases:
   install:
     commands:
       - echo Installing dependencies...
       - sudo yum update -y
       - sudo yum install -y httpd git
-      - echo Installing git-secrets...
-      - git clone https://github.com/RuthinAireni/deploy.git
-      - cd git-secrets && sudo make install && cd ..
-      - git secrets --install
-      - git secrets --register-aws
   build:
     commands:
       - echo Build started on `date`
-      - pwd && ls -la
-      - echo Running git-secrets scan...
-      - git secrets --scan
       - sudo cp index.html /var/www/html/       # Copy index.html to the correct location
   post_build:
     commands:
