@@ -1,18 +1,26 @@
 version: 0.2
+
 phases:
-  install:
+  pre_build:
     commands:
-      - echo Installing NGINX...
-      - sudo yum update -y
-      - sudo yum install httpd -y
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 148761682921.dkr.ecr.ca-central-1.amazonaws.com
+      - REPOSITORY_URI=148761682921.dkr.ecr.ca-central-1.amazonaws.com/deploy1
   build:
     commands:
-      - echo Build started on `date`
-      - pwd && ls -la
-      - sudo cp index.html /var/www/html/       # Copy index.html to the correct location
+      - echo Build started on date
+      - echo Building the Docker image...
+      - docker build -t deploy1 .
+      - docker tag deploy1:latest 148761682921.dkr.ecr.ca-central-1.amazonaws.com/deploy1:latest
   post_build:
     commands:
-      - echo Configuring and starting NGINX...
+      - echo Build completed on date
+      - echo Pushing the Docker images...
+      - docker push 148761682921.dkr.ecr.ca-central-1.amazonaws.com/deploy1:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"%s","imageUri":"%s"}]' pradeep $REPOSITORY_URI:latest > imagedefinitions.json
+      - 
+
 artifacts:
-  files:
-    - '**/*'
+    files: imagedefinitions.json
