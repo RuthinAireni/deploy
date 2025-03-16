@@ -17,7 +17,7 @@ phases:
     commands:
       - echo Build completed on date
       - echo Pushing the Docker images...
-      - docker push 148761682921.dkr.ecr.ca-central-1.amazonaws.com/deploy1:latest
+      - docker push 148761682921.dkr.ecr.ca-central-1.amazonaws.com/deployeks:latest
       - echo Writing image definitions file...
       - printf '[{"name":"%s","imageUri":"%s"}]' pradeep $REPOSITORY_URI:latest > imagedefinitions.json
       - 
